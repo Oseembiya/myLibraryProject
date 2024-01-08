@@ -2,10 +2,98 @@
 #include <vector>
 #include <string>
 
-// Date class definition (Assuming it's already defined)
+// Forward declaration of Member class
+class Member;
+
+// Date class definition
 class Date {
+private:
+    int day;
+    int month;
+    int year;
+
 public:
-    // Date properties and methods go here
+    // Constructor
+    Date(int day, int month, int year)
+        : day(day), month(month), year(year) {}
+
+    // Getter methods for day, month, and year
+    int getDay() const {
+        return day;
+    }
+
+    int getMonth() const {
+        return month;
+    }
+
+    int getYear() const {
+        return year;
+    }
+};
+
+// Person class definition
+class Person {
+protected:
+    std::string name;
+    std::string address;
+    std::string email;
+
+public:
+    // Constructors
+    Person() {} // Default constructor
+
+    Person(const std::string& name, const std::string& address, const std::string& email)
+        : name(name), address(address), email(email) {}
+
+    // Member functions
+    std::string getName() const {
+        return name;
+    }
+
+    void setName(const std::string& newName) {
+        name = newName;
+    }
+
+    std::string getAddress() const {
+        return address;
+    }
+
+    void setAddress(const std::string& newAddress) {
+        address = newAddress;
+    }
+
+    std::string getEmail() const {
+        return email;
+    }
+
+    void setEmail(const std::string& newEmail) {
+        email = newEmail;
+    }
+};
+
+// Member class definition
+class Member : public Person {
+private:
+    int memberID;
+    std::vector<Book> booksLoaned;
+
+public:
+    // Constructor
+    Member(int memberID, const std::string& name, const std::string& address, const std::string& email)
+        : memberID(memberID), Person(name, address, email) {}
+
+    // Member functions
+    int getMemberID() const {
+        return memberID;
+    }
+
+    std::vector<Book> getBooksBorrowed() const {
+        return booksLoaned;
+    }
+
+    void setBooksBorrowed(const Book& book) {
+        booksLoaned.push_back(book);
+    }
 };
 
 // Book class definition
@@ -64,45 +152,6 @@ public:
     }
 };
 
-// Person class definition
-class Person {
-protected:
-    std::string name;
-    std::string address;
-    std::string email;
-
-public:
-    // Constructors
-    Person() {} // Default constructor
-
-    Person(const std::string& name, const std::string& address, const std::string& email)
-        : name(name), address(address), email(email) {}
-
-    // Member functions
-    std::string getName() const {
-        return name;
-    }
-
-    void setName(const std::string& newName) {
-        name = newName;
-    }
-
-    std::string getAddress() const {
-        return address;
-    }
-
-    void setAddress(const std::string& newAddress) {
-        address = newAddress;
-    }
-
-    std::string getEmail() const {
-        return email;
-    }
-
-    void setEmail(const std::string& newEmail) {
-        email = newEmail;
-    }
-};
 
 // Librarian class definition
 class Librarian : public Person {
@@ -133,52 +182,48 @@ public:
     }
 
     // Additional member functions specific to Librarian
-    void addMember() {
+    void addMember(Member& member) {
         // Implementation for adding a member
+        // Display new member's details
+        std::cout << "New member added: " << member.getName() << " - Member ID: " << member.getMemberID() << std::endl;
     }
 
-    void issueBook(int memberID, int bookID) {
+    void issueBook(Member& member, Book& book) {
         // Implementation for issuing a book
+        // Set due date (3 days from the date of issue)
+        // Display issued book details
+        std::cout << "Book issued to " << member.getName() << ": " << book.getBookName() << " - Due Date: " << " [calculate_due_date]" << std::endl;
     }
 
-    void returnBook(int memberID, int bookID) {
+    void returnBook(Member& member, Book& book) {
         // Implementation for returning a book
+        // Additional logic for handling the returned book
+        book.returnBook();
+        std::cout << "Book returned by " << member.getName() << ": " << book.getBookName() << std::endl;
     }
 
-    void displayBorrowedBooks(int memberID) {
+    void displayBorrowedBooks(const Member& member) {
         // Implementation for displaying borrowed books
+        std::cout << "Books borrowed by " << member.getName() << ":" << std::endl;
+        const std::vector<Book>& books = member.getBooksBorrowed();
+        for (const Book& book : books) {
+            std::cout << "- " << book.getBookName() << std::endl;
+        }
     }
 
-    void calculateFine(int memberID) {
+    void calculateFine(const Member& member) {
         // Implementation for calculating fine
+        // Additional logic for calculating fine for overdue books
+        const std::vector<Book>& books = member.getBooksBorrowed();
+        for (const Book& book : books) {
+            // Check if the book is overdue and calculate fine
+            // Fine calculation logic here
+            // std::cout << "Fine for " << member.getName() << ": £" << [calculated_fine] << std::endl;
+        }
     }
 };
 
-// Member class definition
-class Member : public Person {
-private:
-    int memberID;
-    std::vector<Book> booksLoaned;
-
-public:
-    // Constructor
-    Member(int memberID, const std::string& name, const std::string& address, const std::string& email)
-        : memberID(memberID), Person(name, address, email) {}
-
-    // Member functions
-    int getMemberID() const {
-        return memberID;
-    }
-
-    std::vector<Book> getBooksBorrowed() const {
-        return booksLoaned;
-    }
-
-    void setBooksBorrowed(const Book& book) {
-        booksLoaned.push_back(book);
-    }
-};
-
+// Main function
 int main() {
     // You can test your classes here
     return 0;
