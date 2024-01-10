@@ -1,14 +1,30 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "Member.h"  // Assuming there is a Member class header
-#include "Date.h"    // Assuming there is a Date class header
 
+class Date {
+private:
+    int day;
+    int month;
+    int year;
 
-// Forward declaration of Date class
-class Date;
+public:
+    Date(int day, int month, int year)
+        : day(day), month(month), year(year) {}
 
-// Person class definition
+    int getDay() const {
+        return day;
+    }
+
+    int getMonth() const {
+        return month;
+    }
+
+    int getYear() const {
+        return year;
+    }
+};
+
 class Person {
 protected:
     std::string name;
@@ -16,11 +32,9 @@ protected:
     std::string email;
 
 public:
-    // Constructors
-    // In the Person class
     Person(const std::string& name, const std::string& address, const std::string& email)
-    : name(name), address(address), email(email) {}
-    // Member functions
+        : name(name), address(address), email(email) {}
+
     std::string getName() const {
         return name;
     }
@@ -46,35 +60,7 @@ public:
     }
 };
 
-// Forward declaration of Member class
 class Member;
-
-
-// Date class definition
-class Date {
-private:
-    int day;
-    int month;
-    int year;
-
-public:
-    // Constructor
-    Date(int day, int month, int year)
-        : day(day), month(month), year(year) {}
-
-    // Getter methods for day, month, and year
-    int getDay() const {
-        return day;
-    }
-
-    int getMonth() const {
-        return month;
-    }
-
-    int getYear() const {
-        return year;
-    }
-};
 
 class Book {
 private:
@@ -83,76 +69,59 @@ private:
     std::string authorFirstName;
     std::string authorLastName;
     std::string bookType;
-    Date dueDate; 
-
-    // Assuming you have a Member class defined
+    Date dueDate;
     Member* borrower;
 
 public:
-    // Constructor
     Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName, const Date& dueDate);
-// Also, provide a constructor for Book that accepts a Date
-Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName, const Date& dueDate)
-    : bookID(id), bookName(name), authorFirstName(firstName), authorLastName(lastName), dueDate(dueDate) {}
 
-void setDueDate(const Date& date);
-void returnBook();
-void borrowBook(Member* borrower, const Date& dueDate)
-void Book::setDueDate(const Date& date) {
-    dueDate = date;
-}
+    Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName)
+        : bookID(id), bookName(name), authorFirstName(firstName), authorLastName(lastName) {}
 
-void Book::returnBook() {
-    borrower = nullptr;
-    // Additional logic for handling the returned book
-}
+    void setDueDate(const Date& date);
+    void returnBook();
+    void borrowBook(Member* borrower, const Date& dueDate);
 
-void Book::borrowBook(Member* borrower, const Date& dueDate) {
-    this->borrower = borrower;
-    setDueDate(dueDate);
-    // Additional logic for handling the borrowed book
-}
+    int getBookID() const {
+        return bookID;
+    }
+
+    std::string getBookName() const {
+        return bookName;
+    }
+
+    Date getDueDate() const {
+        return dueDate;
+    }
 };
 
-// Implementation of Book constructor
-Book::Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName, const Date& dueDate)
-    : bookID(id), bookName(name), authorFirstName(firstName), authorLastName(lastName), dueDate(dueDate) {
-    // Initialization of other properties
-}
-
-// Member class definition
 class Member : public Person {
 private:
     int memberID;
     std::vector<Book> booksLoaned;
 
 public:
-    // Constructor
     Member(int memberID, const std::string& name, const std::string& address, const std::string& email);
 
-    // Member functions
     int getMemberID() const {
         return memberID;
     }
 
-    std::vector<Book> getBooksBorrowed() const {
+    std::vector<Book>& getBooksBorrowed() {
         return booksLoaned;
     }
 
     void setBooksBorrowed(const Book& book);
 };
 
-// Librarian class definition
 class Librarian : public Person {
 private:
     int staffID;
     int salary;
 
 public:
-    // Constructor
     Librarian(int staffID, const std::string& name, const std::string& address, const std::string& email, int salary);
 
-    // Member functions
     int getStaffID() const {
         return staffID;
     }
@@ -169,38 +138,16 @@ public:
         salary = newSalary;
     }
 
-    // Additional member functions specific to Librarian
-    void Librarian::calculateFine(const Member& member) {
-    const std::vector<Book>& books = member.getBooksBorrowed();
-
-    // Assuming a fixed fine amount for each overdue book
-    const double finePerDay = 2.50;  // Adjust this value as needed
-
-    for (const Book& book : books) {
-        // Check if the book is overdue
-        Date currentDate(2024, 1, 10);  // Replace with the actual current date
-        Date dueDate = book.getDueDate();
-
-        if (currentDate > dueDate) {
-            // Calculate the number of days overdue
-            int daysOverdue = currentDate.getDay() - dueDate.getDay();
-
-            // Calculate the fine for the overdue book
-            double calculatedFine = finePerDay * daysOverdue;
-
-            // Display the fine information
-            std::cout << "Fine for " << member.getName() << ": £" << calculatedFine << " for book '"
-                      << book.getBookName() << "' (Days overdue: " << daysOverdue << ")" << std::endl;
-        }
-    }
-}
+    void addMember(Member& member);
+    void issueBook(Member& member, Book& book);
+    void returnBook(Member& member, Book& book);
+    void displayBorrowedBooks(const Member& member);
+    void calculateFine(const Member& member);
 };
 
 // Implementation of Book member functions
-Book::Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName)
-    : bookID(id), bookName(name), authorFirstName(firstName), authorLastName(lastName) {
-    // Initialization of other properties
-}
+Book::Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName, const Date& dueDate)
+    : bookID(id), bookName(name), authorFirstName(firstName), authorLastName(lastName), dueDate(dueDate), borrower(nullptr) {}
 
 void Book::setDueDate(const Date& date) {
     dueDate = date;
@@ -230,27 +177,26 @@ Librarian::Librarian(int staffID, const std::string& name, const std::string& ad
     : staffID(staffID), salary(salary), Person(name, address, email) {}
 
 void Librarian::addMember(Member& member) {
-    // Implementation for adding a member
-    // Display new member's details
     std::cout << "New member added: " << member.getName() << " - Member ID: " << member.getMemberID() << std::endl;
 }
 
 void Librarian::issueBook(Member& member, Book& book) {
-    // Implementation for issuing a book
     // Set due date (3 days from the date of issue)
+    Date dueDate(2024, 1, 13);  // Adjust this based on the actual logic
+    book.borrowBook(&member, dueDate);
+
     // Display issued book details
-    std::cout << "Book issued to " << member.getName() << ": " << book.getBookName() << " - Due Date: " << " [calculate_due_date]" << std::endl;
+  std::cout << "Book issued to " << member.getName() << ": " << book.getBookName() << " - Due Date: "
+              << book.getDueDate().getYear() << "-" << book.getDueDate().getMonth() << "-" << book.getDueDate().getDay() << std::endl;
+
 }
 
 void Librarian::returnBook(Member& member, Book& book) {
-    // Implementation for returning a book
-    // Additional logic for handling the returned book
     book.returnBook();
     std::cout << "Book returned by " << member.getName() << ": " << book.getBookName() << std::endl;
 }
 
 void Librarian::displayBorrowedBooks(const Member& member) {
-    // Implementation for displaying borrowed books
     std::cout << "Books borrowed by " << member.getName() << ":" << std::endl;
     const std::vector<Book>& books = member.getBooksBorrowed();
     for (const Book& book : books) {
@@ -259,26 +205,39 @@ void Librarian::displayBorrowedBooks(const Member& member) {
 }
 
 void Librarian::calculateFine(const Member& member) {
-    // Implementation for calculating fine
-    // Additional logic for calculating fine for overdue books
     const std::vector<Book>& books = member.getBooksBorrowed();
+
+    // Assuming a fixed fine amount for each overdue book
+    const double finePerDay = 2.50;  // Adjust this value as needed
+
     for (const Book& book : books) {
         // Check if the book is overdue and calculate fine
-        // Fine calculation logic here
-        // std::cout << "Fine for " << member.getName() << ": £" << [calculated_fine] << std::endl;
+        Date currentDate(2024, 1, 10);  // Replace with the actual current date
+        Date dueDate = book.getDueDate();
+
+        if (currentDate.getYear() > dueDate.getYear() ||
+            (currentDate.getYear() == dueDate.getYear() && currentDate.getMonth() > dueDate.getMonth()) ||
+            (currentDate.getYear() == dueDate.getYear() && currentDate.getMonth() == dueDate.getMonth() && currentDate.getDay() > dueDate.getDay())) {
+            // Calculate the number of days overdue
+            int daysOverdue = currentDate.getDay() - dueDate.getDay();
+
+            // Calculate the fine for the overdue book
+            double calculatedFine = finePerDay * daysOverdue;
+
+            // Display the fine information
+            std::cout << "Fine for " << member.getName() << ": £" << calculatedFine << " for book '"
+                      << book.getBookName() << "' (Days overdue: " << daysOverdue << ")" << std::endl;
+        }
     }
 }
 
-// Main function
 int main() {
-    // Create instances of your classes for testing
     Member member1(1, "John Doe", "123 Main St", "john@example.com");
     Book book1(101, "The Great Gatsby", "F. Scott", "Fitzgerald");
     Librarian librarian(1001, "Alice Librarian", "456 Library Ave", "alice@example.com", 50000);
 
     int choice;
     do {
-        // Display menu options
         std::cout << "\nMenu:\n";
         std::cout << "1. Add Member\n";
         std::cout << "2. Issue Book\n";
@@ -291,13 +250,12 @@ int main() {
 
         switch (choice) {
             case 1: {
-                // Add Member
                 int memberId;
                 std::string name, address, email;
                 std::cout << "Enter Member ID: ";
                 std::cin >> memberId;
                 std::cout << "Enter Name: ";
-                std::cin.ignore(); // Ignore newline character in buffer
+                std::cin.ignore();
                 std::getline(std::cin, name);
                 std::cout << "Enter Address: ";
                 std::getline(std::cin, address);
@@ -309,36 +267,18 @@ int main() {
                 break;
             }
             case 2: {
-                // Issue Book
-                int memberId, bookId;
-                std::cout << "Enter Member ID: ";
-                std::cin >> memberId;
-                std::cout << "Enter Book ID: ";
-                std::cin >> bookId;
-
-                // Assuming you have access to the corresponding Member and Book objects
                 librarian.issueBook(member1, book1);
                 break;
             }
             case 3: {
-                // Return Book
-                int memberId, bookId;
-                std::cout << "Enter Member ID: ";
-                std::cin >> memberId;
-                std::cout << "Enter Book ID: ";
-                std::cin >> bookId;
-
-                // Assuming you have access to the corresponding Member and Book objects
                 librarian.returnBook(member1, book1);
                 break;
             }
             case 4: {
-                // Display Borrowed Books
                 librarian.displayBorrowedBooks(member1);
                 break;
             }
             case 5: {
-                // Calculate Fine
                 librarian.calculateFine(member1);
                 break;
             }
