@@ -1,6 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "Member.h"  // Assuming there is a Member class header
+#include "Date.h"    // Assuming there is a Date class header
+
 
 // Forward declaration of Date class
 class Date;
@@ -14,11 +17,9 @@ protected:
 
 public:
     // Constructors
-    Person() {} // Default constructor
-
+    // In the Person class
     Person(const std::string& name, const std::string& address, const std::string& email)
-        : name(name), address(address), email(email) {}
-
+    : name(name), address(address), email(email) {}
     // Member functions
     std::string getName() const {
         return name;
@@ -48,49 +49,6 @@ public:
 // Forward declaration of Member class
 class Member;
 
-// Book class definition
-class Book {
-private:
-    int bookID;
-    std::string bookName;
-    std::string authorFirstName;
-    std::string authorLastName;
-    std::string bookType;
-    Date dueDate;
-    // Assuming you have a Member class defined
-    Member* borrower;
-
-public:
-    // Constructor
-    Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName);
-
-    // Member functions
-    int getBookID() const {
-        return bookID;
-    }
-
-    std::string getBookName() const {
-        return bookName;
-    }
-
-    std::string getAuthorFirstName() const {
-        return authorFirstName;
-    }
-
-    std::string getAuthorLastName() const {
-        return authorLastName;
-    }
-
-    Date getDueDate() const {
-        return dueDate;
-    }
-
-    void setDueDate(const Date& date);
-
-    void returnBook();
-
-    void borrowBook(Member* borrower, const Date& dueDate);
-};
 
 // Date class definition
 class Date {
@@ -117,6 +75,50 @@ public:
         return year;
     }
 };
+
+class Book {
+private:
+    int bookID;
+    std::string bookName;
+    std::string authorFirstName;
+    std::string authorLastName;
+    std::string bookType;
+    Date dueDate; 
+
+    // Assuming you have a Member class defined
+    Member* borrower;
+
+public:
+    // Constructor
+    Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName, const Date& dueDate);
+// Also, provide a constructor for Book that accepts a Date
+Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName, const Date& dueDate)
+    : bookID(id), bookName(name), authorFirstName(firstName), authorLastName(lastName), dueDate(dueDate) {}
+
+void setDueDate(const Date& date);
+void returnBook();
+void borrowBook(Member* borrower, const Date& dueDate)
+void Book::setDueDate(const Date& date) {
+    dueDate = date;
+}
+
+void Book::returnBook() {
+    borrower = nullptr;
+    // Additional logic for handling the returned book
+}
+
+void Book::borrowBook(Member* borrower, const Date& dueDate) {
+    this->borrower = borrower;
+    setDueDate(dueDate);
+    // Additional logic for handling the borrowed book
+}
+};
+
+// Implementation of Book constructor
+Book::Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName, const Date& dueDate)
+    : bookID(id), bookName(name), authorFirstName(firstName), authorLastName(lastName), dueDate(dueDate) {
+    // Initialization of other properties
+}
 
 // Member class definition
 class Member : public Person {
@@ -168,24 +170,37 @@ public:
     }
 
     // Additional member functions specific to Librarian
-    void addMember(Member& member);
+    void Librarian::calculateFine(const Member& member) {
+    const std::vector<Book>& books = member.getBooksBorrowed();
 
-    void issueBook(Member& member, Book& book);
+    // Assuming a fixed fine amount for each overdue book
+    const double finePerDay = 2.50;  // Adjust this value as needed
 
-    void returnBook(Member& member, Book& book);
+    for (const Book& book : books) {
+        // Check if the book is overdue
+        Date currentDate(2024, 1, 10);  // Replace with the actual current date
+        Date dueDate = book.getDueDate();
 
-    void displayBorrowedBooks(const Member& member);
+        if (currentDate > dueDate) {
+            // Calculate the number of days overdue
+            int daysOverdue = currentDate.getDay() - dueDate.getDay();
 
-    void calculateFine(const Member& member);
+            // Calculate the fine for the overdue book
+            double calculatedFine = finePerDay * daysOverdue;
+
+            // Display the fine information
+            std::cout << "Fine for " << member.getName() << ": £" << calculatedFine << " for book '"
+                      << book.getBookName() << "' (Days overdue: " << daysOverdue << ")" << std::endl;
+        }
+    }
+}
 };
 
 // Implementation of Book member functions
 Book::Book(int id, const std::string& name, const std::string& firstName, const std::string& lastName)
-    : bookID(id), bookName(name), authorFirstName(firstName), authorLastName(lastName){
-
-} 
+    : bookID(id), bookName(name), authorFirstName(firstName), authorLastName(lastName) {
     // Initialization of other properties
-
+}
 
 void Book::setDueDate(const Date& date) {
     dueDate = date;
