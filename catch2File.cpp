@@ -1,5 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
+#include "myCodeFile.cpp"
 
 // Include your header file(s) here
 
