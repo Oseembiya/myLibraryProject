@@ -12,7 +12,7 @@ TEST_CASE("Book class test") {
         REQUIRE(book.getBookName() == "Test Book");
         REQUIRE_FALSE(book.isBorrowed());
 
-        Date dueDate(2024, 1, 15);
+        Date dueDate(15, 1, 2024);
         book.borrowBook(101, dueDate);
         REQUIRE(book.isBorrowed());
         REQUIRE(book.getBorrowerID() == 101);
@@ -22,7 +22,7 @@ TEST_CASE("Book class test") {
     SECTION("Book return") {
         // Add test cases for Book return functionality
         Book book(2, "Another Book");
-        Date dueDate(2024, 1, 10);
+        Date dueDate(10, 1, 2024);
 
         book.borrowBook(102, dueDate);
         REQUIRE(book.isBorrowed());

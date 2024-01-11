@@ -73,7 +73,7 @@ class Book {
 private:
     int bookID;
     std::string bookName;
-    Date dueDate;  // Added for due date handling
+    Date dueDate;  //i Added for due date handling
     bool borrowed;
     int borrowerID;
 
@@ -257,8 +257,8 @@ void Librarian::calculateFine(const Member& member) {
         }
     }
 }
-
-int main() {
+/*
+int main() { 
     std::string librarianName, librarianAddress, librarianEmail;
     int librarianID, librarianSalary;
 
@@ -379,3 +379,4 @@ int main() {
 
     return 0;
 }
+*/
