@@ -257,7 +257,7 @@ void Librarian::calculateFine(const Member& member) {
         }
     }
 }
-/*
+
 int main() { 
     std::string librarianName, librarianAddress, librarianEmail;
     int librarianID, librarianSalary;
@@ -322,7 +322,6 @@ int main() {
                 std::cout << "Enter Book ID: ";
                 std::cin >> bookID;
 
-                
                 Book book1(bookID, "Sample Book");
                 Member member1(memberID, "John Doe", "123 Main St", "john@example.com");
 
@@ -338,7 +337,6 @@ int main() {
                 std::cout << "Enter Book ID: ";
                 std::cin >> bookID;
 
-                
                 Book book1(bookID, "Sample Book");
                 Member member1(memberID, "John Doe", "123 Main St", "john@example.com");
 
@@ -351,7 +349,6 @@ int main() {
                 std::cout << "Enter Member ID: ";
                 std::cin >> memberID;
 
-                
                 Member member1(memberID, "John Doe", "123 Main St", "john@example.com");
 
                 librarian.displayBorrowedBooks(member1);
@@ -363,7 +360,7 @@ int main() {
                 std::cout << "Enter Member ID: ";
                 std::cin >> memberID;
 
-              
+                
                 Member member1(memberID, "John Doe", "123 Main St", "john@example.com");
 
                 librarian.calculateFine(member1);
@@ -379,4 +376,3 @@ int main() {
 
     return 0;
 }
-*/
