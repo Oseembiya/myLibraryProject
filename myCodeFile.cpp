@@ -68,12 +68,12 @@ public:
         std::cout << "Name: " << name << "\nAddress: " << address << "\nEmail: " << email << std::endl;
     }
 };
-// this is a book class
+// this is a class 
 class Book {
 private:
     int bookID;
     std::string bookName;
-    Date dueDate;  //I added for due date handling
+    Date dueDate;  //i Added for due date handling
     bool borrowed;
     int borrowerID;
 
