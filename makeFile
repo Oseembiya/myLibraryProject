@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++11
 
-SRCS = myCodeFile.cpp
+SRCS = /src/myCodeFile.cpp
 OBJS = $(SRCS:.cpp=.o)
 EXEC = library_management_system
 
