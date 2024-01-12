@@ -258,6 +258,8 @@ void Librarian::calculateFine(const Member& member) {
     }
 }
 
+
+// this is the main code
 int main() { 
     std::string librarianName, librarianAddress, librarianEmail;
     int librarianID, librarianSalary;
