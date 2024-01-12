@@ -5,7 +5,7 @@
 #include <ctime>
 
 class Book; 
-
+// this is a date class
 class Date {
 private:
     int day;
@@ -29,7 +29,7 @@ public:
         return year;
     }
 };
-
+// this is a person class
 class Person {
 protected:
     std::string name;
@@ -68,12 +68,12 @@ public:
         std::cout << "Name: " << name << "\nAddress: " << address << "\nEmail: " << email << std::endl;
     }
 };
-
+// this is a book class
 class Book {
 private:
     int bookID;
     std::string bookName;
-    Date dueDate;  //i Added for due date handling
+    Date dueDate;  //I added for due date handling
     bool borrowed;
     int borrowerID;
 
