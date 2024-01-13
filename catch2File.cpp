@@ -1,8 +1,10 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "src/mycodeFile.cpp"
-
-// Include your header file(s) here
+#include "Date.cpp"
+#include "Person.cpp"
+#include "Book.cpp"
+#include "Member.cpp"
+#include "Librarian.cpp"
 
 TEST_CASE("Book class test") {
     SECTION("Book initialization and borrowing") {
@@ -31,6 +33,106 @@ TEST_CASE("Book class test") {
         REQUIRE_FALSE(book.isBorrowed());
         REQUIRE(book.getBorrowerID() == -1);
         // Additional checks if needed
+    }
+}
+
+TEST_CASE("Person Class Test") {
+    SECTION("Default Constructor and Getter Methods") {
+        Person person("John Doe", "123 Main St", "john@example.com");
+
+        REQUIRE(person.getName() == "John Doe");
+        REQUIRE(person.getAddress() == "123 Main St");
+        REQUIRE(person.getEmail() == "john@example.com");
+    }
+
+    SECTION("Setter Methods") {
+        Person person("John Doe", "123 Main St", "john@example.com");
+
+        person.setName("Jane Doe");
+        REQUIRE(person.getName() == "Jane Doe");
+
+        person.setAddress("456 Oak St");
+        REQUIRE(person.getAddress() == "456 Oak St");
+
+        person.setEmail("jane@example.com");
+        REQUIRE(person.getEmail() == "jane@example.com");
+    }
+
+    SECTION("Display Details Method") {
+        Person person("John Doe", "123 Main St", "john@example.com");
+
+        // Redirect cout to a stringstream to capture the output
+        std::stringstream ss;
+        std::streambuf* old_cout = std::cout.rdbuf(ss.rdbuf());
+
+        person.displayDetails();
+
+        // Restore cout
+        std::cout.rdbuf(old_cout);
+
+        // Check if the output matches the expected output
+        REQUIRE(ss.str() == "Name: John Doe\nAddress: 123 Main St\nEmail: john@example.com\n");
+    }
+}
+
+TEST_CASE("Book Class Test") {
+    SECTION("Default Constructor and Getter Methods") {
+        Book book(1, "Sample Book");
+
+        REQUIRE(book.getBookID() == 1);
+        REQUIRE(book.getBookName() == "Sample Book");
+        REQUIRE(book.isBorrowed() == false);
+        REQUIRE(book.getBorrowerID() == -1);
+
+        Date defaultDueDate;  // Default-constructed Date object
+        REQUIRE(book.getDueDate() == defaultDueDate);
+    }
+
+    SECTION("Operator== Method") {
+        Book book1(1, "Sample Book");
+        Book book2(1, "Another Book");
+        Book book3(2, "Sample Book");
+
+        REQUIRE(book1 == book2);
+        REQUIRE(!(book1 == book3));
+    }
+
+    SECTION("Borrow and Return Book Methods") {
+        Book book(1, "Sample Book");
+        Date dueDate(2024, 1, 15);
+
+        REQUIRE(book.isBorrowed() == false);
+        REQUIRE(book.getBorrowerID() == -1);
+
+        book.borrowBook(123, dueDate);
+
+        REQUIRE(book.isBorrowed() == true);
+        REQUIRE(book.getBorrowerID() == 123);
+        REQUIRE(book.getDueDate() == dueDate);
+
+        book.returnBook();
+
+        REQUIRE(book.isBorrowed() == false);
+        REQUIRE(book.getBorrowerID() == -1);
+    }
+
+    SECTION("Display Details Method") {
+        Book book(1, "Sample Book");
+        Date dueDate(2024, 1, 15);
+
+        book.borrowBook(123, dueDate);
+
+        // Redirect cout to a stringstream to capture the output
+        std::stringstream ss;
+        std::streambuf* old_cout = std::cout.rdbuf(ss.rdbuf());
+
+        book.displayDetails();
+
+        // Restore cout
+        std::cout.rdbuf(old_cout);
+
+        // Check if the output matches the expected output
+        REQUIRE(ss.str() == "Book ID: 1\nBook Name: Sample Book\nBorrowed by Member ID: 123\nDue Date: 15/1/2024\n");
     }
 }
 
@@ -67,12 +169,3 @@ TEST_CASE("Member class test") {
     }
 }
 
-// Add more test cases for other classes if necessary
-
-// Optionally, add more test cases to cover the Librarian class and its methods
-
-TEST_CASE("Librarian class test") {
-    // Add test cases for the Librarian class and its methods
-    // You may want to mock or stub external dependencies if necessary
-    // Additional checks and verifications can be added
-}

@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <ctime>
 
-class Book; 
 // this is a date class
 class Date {
 private:
@@ -28,7 +27,9 @@ public:
     int getYear() const {
         return year;
     }
+    
 };
+
 // this is a person class
 class Person {
 protected:
@@ -376,5 +377,5 @@ int main() {
         }
     } while (choice != 0);
 
-    return 0;
+    return 0; 
 }
