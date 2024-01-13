@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <ctime>
 
-// this is a date class
+/////////////////////////////////////This is a date class//////////////////////////////////////////
 class Date {
 private:
     int day;
@@ -30,7 +30,7 @@ public:
     
 };
 
-// this is a person class
+///////////////////////////////This is a person class/////////////////////////////////////////////
 class Person {
 protected:
     std::string name;
@@ -69,7 +69,7 @@ public:
         std::cout << "Name: " << name << "\nAddress: " << address << "\nEmail: " << email << std::endl;
     }
 };
-// this is a class 
+////////////////////////////////////This is a book class//////////////////////////////////// 
 class Book {
 private:
     int bookID;
@@ -118,6 +118,7 @@ public:
     void returnBook();
 };
 
+
 void Book::borrowBook(int memberID, const Date& dueDate) {
     borrowed = true;
     borrowerID = memberID;
@@ -129,7 +130,7 @@ void Book::returnBook() {
     borrowerID = -1;
     // Additional logic for handling the returned book
 }
-
+///////////////////////////////////This is a class Member///////////////////////////////////////
 class Member : public Person {
 private:
     int memberID;
@@ -175,7 +176,7 @@ void Member::displayBorrowedBooks() const {
         book.displayDetails();
     }
 }
-
+///////////////////////////////////////This is class Librarian////////////////////////////////////
 class Librarian : public Person {
 private:
     int staffID;
@@ -260,7 +261,7 @@ void Librarian::calculateFine(const Member& member) {
 }
 
 
-// this is the main code
+//////////////////////////////////////This is the main code//////////////////////////////////////////////
 int main() { 
     std::string librarianName, librarianAddress, librarianEmail;
     int librarianID, librarianSalary;

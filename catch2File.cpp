@@ -1,10 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "Date.cpp"
-#include "Person.cpp"
-#include "Book.cpp"
-#include "Member.cpp"
-#include "Librarian.cpp"
+#include "myCodeFile.cpp"
+
 
 TEST_CASE("Book class test") {
     SECTION("Book initialization and borrowing") {
@@ -70,7 +67,7 @@ TEST_CASE("Person Class Test") {
         // Restore cout
         std::cout.rdbuf(old_cout);
 
-        // Check if the output matches the expected output
+        // Checking if the output matches the expected output
         REQUIRE(ss.str() == "Name: John Doe\nAddress: 123 Main St\nEmail: john@example.com\n");
     }
 }
@@ -165,7 +162,6 @@ TEST_CASE("Member class test") {
         member.returnBook(book1);
         REQUIRE(booksBorrowed.size() == 1);
         REQUIRE(booksBorrowed[0] == book2);
-        // Additional checks if needed
     }
 }
 
