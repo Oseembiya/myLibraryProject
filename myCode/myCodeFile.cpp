@@ -69,7 +69,9 @@ public:
         std::cout << "Name: " << name << "\nAddress: " << address << "\nEmail: " << email << std::endl;
     }
 };
-////////////////////////////////////This is a book class//////////////////////////////////// 
+////////////////////////////////////This is a book class////////////////////////////////////
+/// class, Book, represents a book in a library system. It includes private data
+
 class Book {
 private:
     int bookID;
@@ -128,9 +130,11 @@ void Book::borrowBook(int memberID, const Date& dueDate) {
 void Book::returnBook() {
     borrowed = false;
     borrowerID = -1;
-    // Additional logic for handling the returned book
+  
 }
 ///////////////////////////////////This is a class Member///////////////////////////////////////
+////// The constructor initializes the member with a unique ID, name, address, and email. The class provides methods to retrieve the member's ID////
+
 class Member : public Person {
 private:
     int memberID;
@@ -234,7 +238,7 @@ void Librarian::returnBook(Member& member, Book& book) {
 void Librarian::displayBorrowedBooks(const Member& member) {
     member.displayBorrowedBooks();
 }
-
+//////calculates fines for books that are currently borrowed and overdue by a library member///////////
 void Librarian::calculateFine(const Member& member) {
     const std::vector<Book>& books = member.getBooksBorrowed();
     const double finePerDay = 1.0;
@@ -259,7 +263,6 @@ void Librarian::calculateFine(const Member& member) {
         }
     }
 }
-
 
 //////////////////////////////////////This is the main code//////////////////////////////////////////////
 int main() { 

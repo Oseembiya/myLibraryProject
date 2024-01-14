@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++11
 
-SRCS =C:\cygwin64\home\ozeem\myLibraryProject\myCodeFile.cpp
+SRCS =C:\cygwin64\home\ozeem\myLibraryProject\myCode\myCodeFile.cpp
 OBJS = $(SRCS:.cpp=.o)
 EXEC = execute_myCodeFile
 
