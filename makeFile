@@ -3,7 +3,7 @@ CXXFLAGS = -std=c++11
 
 SRCS =C:\cygwin64\home\ozeem\myLibraryProject\myCodeFile.cpp
 OBJS = $(SRCS:.cpp=.o)
-EXEC = library_management_system
+EXEC = execute_myCodeFile
 
 True: $(EXEC)
 
