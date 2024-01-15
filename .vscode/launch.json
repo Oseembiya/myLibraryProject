@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/cygwin64/home/ozeem/myLibraryProject/testFile",
-      "program": "c:/cygwin64/home/ozeem/myLibraryProject/testFile/build/Debug/outDebug",
+      "cwd": "c:/cygwin64/home/ozeem/myLibraryProject/myCode",
+      "program": "c:/cygwin64/home/ozeem/myLibraryProject/myCode/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
