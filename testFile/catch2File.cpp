@@ -1,38 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "myCode\execute_myCodeFile.exe"
-#include "myCode\library_books.exe"
-
-
-TEST_CASE("Book class test") {
-    SECTION("Book initialization and borrowing") {
-        // Add test cases for Book initialization and borrowing functionality
-        Book book(1, "Test Book");
-        REQUIRE(book.getBookID() == 1);
-        REQUIRE(book.getBookName() == "Test Book");
-        REQUIRE_FALSE(book.isBorrowed());
-
-        Date dueDate(15, 1, 2024);
-        book.borrowBook(101, dueDate);
-        REQUIRE(book.isBorrowed());
-        REQUIRE(book.getBorrowerID() == 101);
-        REQUIRE(book.getDueDate() == dueDate);
-    }
-
-    SECTION("Book return") {
-        // Add test cases for Book return functionality
-        Book book(2, "Another Book");
-        Date dueDate(10, 1, 2024);
-
-        book.borrowBook(102, dueDate);
-        REQUIRE(book.isBorrowed());
-
-        book.returnBook();
-        REQUIRE_FALSE(book.isBorrowed());
-        REQUIRE(book.getBorrowerID() == -1);
-        // Additional checks if needed
-    }
-}
+#include "myCodeFile.cpp"
 
 TEST_CASE("Person Class Test") {
     SECTION("Default Constructor and Getter Methods") {
@@ -129,7 +97,7 @@ TEST_CASE("Book Class Test") {
         // Restore cout
         std::cout.rdbuf(old_cout);
 
-        // Check if the output matches the expected output
+        // i Check if the output matches the expected output
         REQUIRE(ss.str() == "Book ID: 1\nBook Name: Sample Book\nBorrowed by Member ID: 123\nDue Date: 15/1/2024\n");
     }
 }
