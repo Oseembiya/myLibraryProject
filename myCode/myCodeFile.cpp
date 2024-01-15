@@ -3,6 +3,9 @@
 #include <string>
 #include <algorithm>
 #include <ctime>
+#include <string>
+#include <fstream>
+#include <sstream>
 
 /////////////////////////////////////This is a date class//////////////////////////////////////////
 class Date {
@@ -266,6 +269,7 @@ void Librarian::calculateFine(const Member& member) {
 
 //////////////////////////////////////This is the main code//////////////////////////////////////////////
 int main() { 
+
     std::string librarianName, librarianAddress, librarianEmail;
     int librarianID, librarianSalary;
 

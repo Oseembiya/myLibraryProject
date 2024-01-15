@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "myCode\execute_myCodeFile.exe"
+#include "myCode\library_books.exe"
 
 
 TEST_CASE("Book class test") {
